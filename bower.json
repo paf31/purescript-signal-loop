@@ -1,0 +1,16 @@
+{
+  "name": "purescript-signal-loop",
+  "version": "1.0.0",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-signal": "~3.0.0"
+  }
+}
