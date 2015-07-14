@@ -7,7 +7,8 @@ import Prelude
 import Control.Monad.Eff.Console
 
 import Signal
-import Signal.Loop
+import Signal.Loop (Emitter(), runLoop)
+import Signal.Channel (send)
 
 import Node.ReadLine
 
@@ -15,12 +16,12 @@ main = do
   interface <- createInterface noCompletion
 
   let makePrompt :: String -> Emitter _ String
-      makePrompt s k = void do
+      makePrompt s c = void do
         log $ "You typed: " ++ s
         setPrompt "> " 2 interface
-        setLineHandler k interface
+        setLineHandler (send c) interface
         prompt interface
  
   -- The loop reads the most recently entered string from the "future" signal
   -- and uses the makePrompt function to display it.
-  loop "" \future -> makePrompt <$> future
+  runLoop "" \future -> makePrompt <$> future
