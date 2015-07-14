@@ -1,6 +1,5 @@
 {
   "name": "purescript-signal-loop",
-  "version": "1.0.0",
   "moduleType": [
     "node"
   ],
