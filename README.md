@@ -4,3 +4,7 @@ A [Halogen](https://github.com/slamdata/purescript-halogen)-style abstraction on
 
 - [Module Documentation](docs/Signal/Loop.md)
 - [Console Example](test/Main.purs)
+
+## Usage
+
+    bower i purescript-signal-loop
