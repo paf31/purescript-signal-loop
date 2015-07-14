@@ -10,16 +10,12 @@ import Control.Monad.Eff
 import Signal
 import Signal.Channel
 
--- | A `Sink` is a receiver of values. You will not normally need to create values of type
--- | `Sink`, since a sink will be provided by the `Emitter`.
-type Sink eff a = a -> Eff eff Unit
-
 -- | An `Emitter` is a function which renders a state and emits new values 
--- | to a `Sink`. For example:
+-- | onto a `Channel`. For example:
 -- |
 -- | - a function which renders a HTML document and emits generated DOM events.
 -- | - a function which prints some text and emits console input.
-type Emitter eff a = Sink eff a -> Eff eff Unit
+type Emitter eff a = Channel a -> Eff eff Unit
 
 -- | A loop is a function from a future input signal to an `Emitter` of values
 -- | of the same input type.
@@ -30,4 +26,4 @@ runLoop :: forall eff a. a -> Loop eff a -> Eff (chan :: Chan | eff) Unit
 runLoop a f = do
   c <- channel a 
   let emitter = f (subscribe c)
-  runSignal (($ (send c)) <$> emitter)
+  runSignal (($ c) <$> emitter)
