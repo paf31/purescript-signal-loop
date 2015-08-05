@@ -10,7 +10,7 @@ signal, given partial information about its own future values.
 type Emitter eff a = Channel a -> Eff eff Unit
 ```
 
-An `Emitter` is a function which renders a state and emits new values 
+An `Emitter` is a function which renders a state and emits new values
 onto a `Channel`. For example:
 
 - a function which renders a HTML document and emits generated DOM events.
@@ -28,9 +28,13 @@ of the same input type.
 #### `runLoop`
 
 ``` purescript
-runLoop :: forall eff a. a -> Loop eff a -> Eff (chan :: Chan | eff) Unit
+runLoop :: forall eff a. a -> Loop eff a -> Eff (chan :: Chan | eff) (Signal a)
 ```
 
-Run a loop, given an initial input.
+Run a loop, given an initial value.
+The effects of the `Emitter`s are run inside of Eff. The initial value and
+the emitted values are provided by the Signal in this Eff's return value.
+If you aren't using these values outside of your `Emitter`s then you don’t
+need to use this Signal.
 
 
