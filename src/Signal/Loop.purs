@@ -10,7 +10,7 @@ import Control.Monad.Eff
 import Signal
 import Signal.Channel
 
--- | An `Emitter` is a function which renders a state and emits new values 
+-- | An `Emitter` is a function which renders a state and emits new values
 -- | onto a `Channel`. For example:
 -- |
 -- | - a function which renders a HTML document and emits generated DOM events.
@@ -24,6 +24,6 @@ type Loop eff a = Signal a -> Signal (Emitter (chan :: Chan | eff) a)
 -- | Run a loop, given an initial input.
 runLoop :: forall eff a. a -> Loop eff a -> Eff (chan :: Chan | eff) Unit
 runLoop a f = do
-  c <- channel a 
+  c <- channel a
   let emitter = f (subscribe c)
   runSignal (($ c) <$> emitter)
