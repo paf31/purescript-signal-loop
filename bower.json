@@ -9,11 +9,15 @@
     "bower_components",
     "output"
   ],
-  "repository": {                                                          
-    "type": "git",                                                         
-    "url": "git://github.com/paf31/purescript-signal-loop.git"            
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/paf31/purescript-signal-loop.git"
   },
   "dependencies": {
-    "purescript-signal": "~3.0.0"
+    "purescript-signal": "^6.0.0"
+  },
+  "devDependencies": {
+    "purescript-console": "^1.0.0",
+    "purescript-node-readline": "^1.0.0"
   }
 }

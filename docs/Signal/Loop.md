@@ -7,7 +7,7 @@ signal, given partial information about its own future values.
 #### `Emitter`
 
 ``` purescript
-type Emitter eff a = Channel a -> Eff eff Unit
+type Emitter eff a = (a -> Eff eff Unit) -> Eff eff Unit
 ```
 
 An `Emitter` is a function which renders a state and emits new values
@@ -19,7 +19,7 @@ onto a `Channel`. For example:
 #### `Loop`
 
 ``` purescript
-type Loop eff a = Signal a -> Signal (Emitter (chan :: Chan | eff) a)
+type Loop eff a = Signal a -> Signal (Emitter eff a)
 ```
 
 A loop is a function from a future input signal to an `Emitter` of values
@@ -28,7 +28,7 @@ of the same input type.
 #### `runLoop`
 
 ``` purescript
-runLoop :: forall eff a. a -> Loop eff a -> Eff (chan :: Chan | eff) (Signal a)
+runLoop :: forall eff a. a -> Loop (channel :: CHANNEL | eff) a -> Eff (channel :: CHANNEL | eff) (Signal a)
 ```
 
 Run a loop, given an initial value.
