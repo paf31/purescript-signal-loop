@@ -15,10 +15,9 @@
     "url": "git://github.com/paf31/purescript-signal-loop.git"
   },
   "dependencies": {
-    "purescript-signal": "^6.0.0"
+    "purescript-signal": "^9.0.0"
   },
   "devDependencies": {
-    "purescript-console": "^1.0.0",
-    "purescript-node-readline": "^1.0.0"
+    "purescript-console": "^3.0.0"
   }
 }

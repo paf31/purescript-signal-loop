@@ -3,8 +3,7 @@
 -- | signal, given partial information about its own future values.
 module Signal.Loop where
 
-import Prelude (Unit, pure, map, bind, ($))
-
+import Prelude
 import Control.Monad.Eff (Eff)
 import Signal (Signal, runSignal)
 import Signal.Channel (CHANNEL, channel, send, subscribe)

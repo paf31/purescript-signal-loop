@@ -4,31 +4,16 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
-import Control.Monad.Eff.Exception (EXCEPTION)
-import Node.ReadLine (READLINE, createConsoleInterface, noCompletion, setPrompt,
-                      setLineHandler, prompt)
 import Signal.Channel (CHANNEL)
 import Signal.Loop (Emitter, runLoop)
 
-main :: Eff ( readline  :: READLINE
-            , console   :: CONSOLE
-            , channel   :: CHANNEL
-            , err       :: EXCEPTION
-            ) Unit
+main :: Eff (console :: CONSOLE, channel :: CHANNEL) Unit
 main = void do
-  interface <- createConsoleInterface noCompletion
+  let view :: Int -> Emitter (console :: CONSOLE, channel :: CHANNEL) Int
+      view n emit = void do
+        log $ "Received: " <> show n
+        when (n < 10) $ emit (n + 1)
 
-  let makePrompt :: String -> Emitter ( readline  :: READLINE
-                                      , console   :: CONSOLE
-                                      , channel   :: CHANNEL
-                                      , err       :: EXCEPTION
-                                      ) String
-      makePrompt s emit = void do
-        log $ "You typed: " <> s
-        setPrompt "> " 2 interface
-        setLineHandler interface emit
-        prompt interface
-
-  -- The loop reads the most recently entered string from the "future" signal
-  -- and uses the makePrompt function to display it.
-  runLoop "" \future -> makePrompt <$> future
+  -- The loop reads the most recent value from the "future" signal
+  -- and uses the view function to display it and simulate the next event.
+  runLoop 0 \future -> map view future
